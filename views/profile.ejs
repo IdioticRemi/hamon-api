@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="height=device-height, initial-scale=1, shrink-to-fit=no">
+
+    <title>Hamon API</title>
+
+    <!-- LOAD CORE CSS -->
+    <link href="../assets/img/brand/Hamon--DARK.png" rel="icon" type="image/png">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <link href="../assets/vendor/nucleo/css/nucleo.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <link rel="stylesheet" href="../assets/css/hamon.css" type="text/css">
+    <link type="text/css" href="../assets/css/argon.css" rel="stylesheet">
+    <link type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container-fluid bg-secondary" style="min-height: 100vh; padding: 0;">
+    <header class="navbar flex-row align-items-md-center navbar-dark bg-dark pad-navbar" style="margin-bottom: 1rem;">
+        <a class="navbar-brand mr-0 mr-md-2 text-secondary" href="/">
+            <img src="../assets/img/brand/HamonBANNER--WHITE.png" alt="">
+            <sup>DOCS</sup>
+        </a>
+
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="btn btn-icon btn-secondary" href="/" style="margin-right: .4rem;">
+                    <span class="btn-inner--text">Home page</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="btn btn-icon btn-danger" href="/logout">
+                    <span class="btn-inner--text">Logout</span>
+                    <span class="btn-inner--icon"><i class="ni ni-button-power"></i></span>
+                </a>
+            </li>
+        </ul>
+    </header>
+    <div class="container">
+        <% if (alerts.length > 0 && alerts.includes("token")) { %>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <span class="alert-inner--text"><strong>SUCCESS!</strong> A new token has been generated for your account.</span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <% } %>
+    </div>
+    <div class="container">
+        <div class="card" style="width: inherit;">
+            <div class="card-header" style="height: 80px;">
+                <h3 class="card-title">Your Profile</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-sm-4">
+                        <img src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar.split("/")[user.avatar.split("/").length - 1] %>"
+                             alt="" class="rounded" style="size: auto; width: 10vw; min-width: 5rem; max-width: 8rem;">
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <h5 class="card-title">Username</h5>
+                        <p class="card-text"><%= user.username %></p>
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <h5 class="card-title">Membership<%= dbUser.ships.length > 0 ? "s" : "" %>
+                        </h5>
+                        <% if (dbUser.ships.length > 0) { %>
+                            <% if (dbUser.ships.includes("admin")) { %>
+                                <span class="badge badge-danger">ADMINISTRATOR</span>
+                            <% } if (dbUser.ships.includes("mod")) { %>
+                                <span class="badge" style="color: #881aad; background-color: rgba(189, 146, 231, .5);">MODERATOR</span>
+                            <% } if (dbUser.ships.includes("dev")) { %>
+                                <span class="badge badge-success">DEVELOPPER</span>
+                            <% } if (dbUser.ships.includes("partner")) { %>
+                                <span class="badge badge-warning">PARTNER</span>
+                            <% } if (dbUser.ships.includes("pro")) { %>
+                                <span class="badge badge-info">PROFESSIONAL</span>
+                            <% } %>
+                        <% } else { %>
+                            <span class="badge badge-primary">MEMBER</span>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="card" style="width: inherit;">
+            <div class="card-header" style="height: 80px;">
+                <h3 class="card-title">Your Token</h3>
+            </div>
+            <div class="card-body">
+                <% if (dbUser.token !== null) { %>
+                    <form class="form-group" action="/profile" method="post">
+                        <input id="token" type="text" value="<%= dbUser.token %>" class="form-control" disabled/><br>
+                        <button type="submit" class="btn btn-dark">Regenerate</button>
+                        <button type="button" onclick="copyToClipboard('<%= dbUser.token %>')" class="btn btn-dark" data-container="body" data-color="success" data-toggle="popover" data-placement="top" data-content="Now check your clipboard! 😉">Copy</button>
+                    </form>
+                <% } else { %>
+                    <form class="form-group" action="/profile" method="post">
+                        <button type="submit" class="btn btn-dark">Generate your token</button>
+                    </form>
+                <% } %>
+            </div>
+        </div>
+        <br>
+        <div class="card" style="width: inherit;">
+            <div class="card-header" style="height: 80px;">
+                <h3 class="card-title">Usage Charts</h3>
+            </div>
+            <div class="card-body">
+                <canvas id="dailyUsage" width="auto" height="auto"></canvas>
+            </div>
+        </div>
+    </div>
+    <footer class="navbar flex-row align-items-md-center navbar-dark bg-dark pad-navbar" style="margin-top: 1rem;">
+        <a class="navbar-brand mr-0 mr-md-2 text-secondary" href="/">
+            <img src="../assets/img/brand/Hamon--WHITE.png" alt="">
+        </a>
+        <ul class="navbar-nav ml-lg-auto">
+            <li class="nav-item text-white">
+                <sub>© 2019 - All rights reserved to Joliveau Thomas</sub>
+            </li>
+        </ul>
+    </footer>
+</div>
+
+<!-- LOAD CORE JS -->
+<script src="../assets/vendor/jquery/jquery.min.js"></script>
+<script src="../assets/vendor/popper/popper.min.js"></script>
+<script src="../assets/vendor/bootstrap/bootstrap.min.js"></script>
+<script src="/assets/vendor/nouislider/js/nouislider.min.js"></script>
+<script src="/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="../assets/js/argon.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script>
+    const keys = (<%- JSON.stringify(keys) %>);
+    const data = (<%- JSON.stringify(data) %>);
+
+	const myLineChart = new Chart($('#dailyUsage'), {
+		type: 'line',
+		data: {
+			labels: keys,
+			datasets: [{
+				label: "API Requests",
+                data: data[0],
+				borderColor: "#03acca",
+				pointBackgroundColor: "rgba(4, 172, 201, .4)",
+				borderWidth: 2,
+				pointHoverRadius: 5,
+				pointRadius: 4,
+				fill: true
+            }, {
+				label: "Errors",
+				data: data[1],
+				borderColor: "#ca001c",
+				pointBackgroundColor: "rgba(202, 0, 28, .5)",
+				borderWidth: 2,
+				pointHoverRadius: 5,
+				pointRadius: 4,
+				fill: false
+			}, {
+				label: "Success",
+				data: data[2],
+				borderColor: "#00ca21",
+				pointBackgroundColor: "rgba(0, 202, 33, .5)",
+				borderWidth: 2,
+				pointHoverRadius: 5,
+				pointRadius: 4,
+                fill: false
+			}]
+        }
+	});
+</script>
+<script>
+	const copyToClipboard = str => {
+		const el = document.createElement('textarea');
+		el.value = str;
+		el.setAttribute('readonly', '');
+		el.style.position = 'absolute';
+		el.style.left = '-9999px';
+		document.body.appendChild(el);
+		const selected = document.getSelection().rangeCount > 0 ? document.getSelection().getRangeAt(0) : false;
+		el.select();
+		document.execCommand('copy');
+		document.body.removeChild(el);
+		if (selected) {
+			document.getSelection().removeAllRanges();
+			document.getSelection().addRange(selected);
+		}
+	};
+</script>
+</body>
+</html>

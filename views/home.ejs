@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Hamon API</title>
+
+    <!-- LOAD CORE CSS -->
+    <link href="../assets/img/brand/Hamon--DARK.png" rel="icon" type="image/png">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <link href="../assets/vendor/nucleo/css/nucleo.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <link rel="stylesheet" href="../assets/css/hamon.css" type="text/css">
+    <link type="text/css" href="../assets/css/argon.css" rel="stylesheet">
+</head>
+<body>
+<div class="container-fluid bg-secondary" style="min-height: 100vh; padding: 0;">
+    <header class="navbar flex-row align-items-md-center navbar-dark bg-dark pad-navbar" style="margin-bottom: 1rem;">
+        <a class="navbar-brand mr-0 mr-md-2 text-secondary" href="#">
+            <img src="../assets/img/brand/HamonBANNER--WHITE.png" alt="">
+            <sup>DOCS</sup>
+        </a>
+
+        <ul class="nav">
+            <li class="nav-item" style="margin-right: .4rem;">
+                <% if (!user) { %>
+                <a class="btn btn-icon btn-secondary" href="<%=url%>">
+                    <span class="btn-inner--text">Login with</span>
+                    <span class="btn-inner--icon"><i class="fab fa-discord"></i></span>
+                </a>
+                <% } else { %>
+                <a class="btn btn-icon btn-secondary" href="/profile">
+                    <span class="btn-inner--text"><%=user.username%></span>
+                    <span class="btn-inner--icon"><img class="rounded" src="https://cdn.discordapp.com/avatars/<%=user.id%>/<%=user.avatar.split("/")[user.avatar.split("/").length - 1]%>" alt=""></span>
+                </a>
+                <% } %>
+            </li>
+            <% if (user) { %>
+                <li class="nav-item">
+                    <a class="btn btn-icon btn-danger" href="/logout">
+                        <span class="btn-inner--text">Logout</span>
+                        <span class="btn-inner--icon"><i class="ni ni-button-power"></i></span>
+                    </a>
+                </li>
+            <% } %>
+        </ul>
+    </header>
+    <div class="container">
+        <% if (alert === true) { %>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <span class="alert-inner--text"><strong>ALERT!</strong> Cannot log you in, please re-login using the button in the top-right corner.</span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <% } %>
+    </div>
+    <div class="container bg-white">
+        <br>
+        <div class="card">
+            <div class="card-body" style="margin-top: -1rem">
+                <div class="progress-wrapper">
+                    <div class="progress-info">
+                        <div class="progress-label">
+                            <span>API Development Status</span>
+                        </div>
+                        <div class="progress-percentage">
+                            <span>53%</span>
+                        </div>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar bg-dark" role="progressbar" style="width: 53%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">The Project</h4>
+                <p class="card-text">
+                    Hamon is an API project maintained by <strong>Kizuru</strong>.<br>
+                    It's very easy-to-use and quite powerful.<br>
+                    It has lots of uses. And some tools like the <strong>captcha</strong> endpoint.
+                </p>
+            </div>
+        </div>
+        <br>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Development</h4>
+                <p class="card-text">
+                    Hamon is being developped using <strong>express.js</strong> as framework running on top of <strong>NodeJS</strong>.<br>
+                    It took a lot of time to code. Especially the <strong>security</strong> part of the app.<br>
+                    I personnally really like the code of it. I love coding on this project!<br>
+                    If you wish to <strong>donate</strong> some money to the developpers, you can donate here: <a class="badge badge-primary" target="blank" href="https://paypal.me/KizuruDev">Paypal</a><br>
+                    If you wish to <strong>join the official discord server</strong> then join here: <a class="badge badge-default" target="blank" href="https://discord.gg/5ycA4Vv">Discord</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <footer class="navbar flex-row align-items-md-center navbar-dark bg-dark pad-navbar" style="margin-top: 1rem;">
+        <a class="navbar-brand mr-0 mr-md-2 text-secondary" href="/">
+            <img src="../assets/img/brand/Hamon--WHITE.png" alt="">
+        </a>
+        <ul class="navbar-nav ml-lg-auto">
+            <li class="nav-item text-white">
+                <sub>© 2019 - All rights reserved to Joliveau Thomas</sub>
+            </li>
+        </ul>
+    </footer>
+</div>
+
+<!-- LOAD CORE JS -->
+<script src="../assets/vendor/jquery/jquery.min.js"></script>
+<script src="../assets/vendor/popper/popper.min.js"></script>
+<script src="../assets/vendor/bootstrap/bootstrap.min.js"></script>
+<script src="/assets/vendor/nouislider/js/nouislider.min.js"></script>
+<script src="/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="../assets/js/argon.js"></script>
+</body>
+</html>

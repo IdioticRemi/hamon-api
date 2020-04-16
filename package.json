@@ -1,0 +1,29 @@
+{
+  "name": "hamon-api",
+  "version": "0.0.1",
+  "description": "A powerful API made with NodeJS and Express to create cool images!",
+  "main": "HamonAPI.js",
+  "dependencies": {
+    "canvas": "^2.6.0",
+    "canvas-constructor": "github:kyranet/canvasConstructor",
+    "cookie-parser": "^1.4.4",
+    "cookies": "^0.7.3",
+    "disco-oauth": "^2.9.1",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "fs-nextra": "^0.4.5",
+    "jimp": "^0.6.1",
+    "moment": "^2.24.0",
+    "mongoose": "^5.5.1",
+    "node-fetch": "^2.3.0",
+    "path": "^0.12.7",
+    "y": "github:silvia-odwyer/pixels.js"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node app.js"
+  },
+  "keywords": [],
+  "author": "Kizuru",
+  "license": "MIT"
+}
