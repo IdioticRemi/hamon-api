@@ -21,7 +21,7 @@ let oauth = new OAuth("OAuthID", "OAuthSecret");
 oauth.setScopes(["identify"]);
 oauth.setRedirect("redirectUri (/login)");
 
-mongoose.connect("mongodb://user:password@host/database", {useNewUrlParser: true})
+mongoose.connect("mongodb://user:password@host/db", {useNewUrlParser: true})
 	.then(() => console.log("Connected to MongoDB server!"))
 	.catch(err => console.error(err.stack));
 
